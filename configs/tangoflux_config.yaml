@@ -1,0 +1,37 @@
+
+# Absolute paths for different resources
+paths:
+  train_file: "/mastering/FINAL_DATA2/trainset_pt.jsonl"
+  val_file: "/mastering/FINAL_DATA2/valset_pt.jsonl"
+  test_file: "/mastering/FINAL_DATA2/testset_pt.jsonl"
+  infer_file: "/mastering/FINAL_DATA2/testset_pt.jsonl"
+  resume_from_checkpoint: ""
+  output_dir: "outputs/"
+
+# Training-related parameters
+training:
+  per_device_batch_size: 16
+  learning_rate: 5e-4
+  gradient_accumulation_steps: 1
+  num_train_epochs: 201
+  num_warmup_steps: 1000
+  max_audio_duration: 30
+  
+ 
+# Model and optimizer parameters, 
+model:
+  num_layers: 6
+  num_single_layers: 18
+  in_channels: 64
+  attention_head_dim: 128
+  joint_attention_dim: 1024
+  num_attention_heads: 8
+  audio_seq_len: 645
+  max_duration: 30
+  uncondition: false
+  text_encoder_name: "google/flan-t5-large"
+  
+
+
+
+
