@@ -1,194 +1,571 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
+    <title>SonicMaster</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,600"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <title>SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="helper.js" defer></script>
     <style>
-      body { font-family: 'Roboto', sans-serif; color: #061e61; }
-      h1 span { font-family: Times, serif; font-weight: bold; }
-      h2 { font-size: 1.5rem; color: #000093; margin-top: 2rem; }
-      table thead { background-color: #f5f5f5; }
-      table, th, td { border: 1px solid #ddd; }
-      th, td { padding: 0.75rem; text-align: center; }
-      .teaser img { width: 100%; }
+      td { vertical-align: middle; }
+      audio {
+        width: 20vw;
+        min-width: 100px;
+        max-width: 250px;
+      }
+      audio::-webkit-media-controls-play-button { display: inline-block !important; }
+      .container-xxxl { max-width: 1500px; }
     </style>
+    <style>
+  .side-logo {
+    max-height: 64px;      /* tweak as needed */
+    width: auto;
+    opacity: 0.95;         /* optional: subtle */
+  }
+  @media (max-width: 575.98px) {
+    .side-logo { max-height: 48px; }
+  }
+</style>
+
+<style>
+  .btn-unified {
+    background-color: #212529;
+    border-color: #212529;
+    color: #fff;
+  }
+  .btn-unified:hover {
+    background-color: #343a40;
+    border-color: #343a40;
+  }
+  .icon-btn i,
+  .icon-btn img {
+    font-size: 1.2rem;
+    vertical-align: middle;
+    margin-right: 0.3em;
+  }
+</style>
+
+  <style>
+    /* Make the container positioned, so the logo can be placed inside it */
+    .container.position-relative {
+      position: relative;
+      padding-top: 80px; /* make room for the logo */
+    }
+    /* Style the logo inside the container */
+    .site-logo {
+      position: absolute;
+      top: 25px;
+      left: 20px;
+      width: 200px;
+      height: auto;
+      z-index: 10;
+    }
+  </style>
+
+
+
+
   </head>
+
   <body>
-    <div class="container">
-      <header class="text-center my-5">
-        <h1><span>SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering</span></h1>
-        <p><strong>Jan Melechovsky, Ambuj Mehrish, Dorien Herremans</strong></p>
-      </header>
+    <!-- ──────────────── 1. Title & Abstract ──────────────── -->
+     <style>
+  .side-logo {
+    width: 300px;
+    height: 300px;
+  }
+  .main-logo {
+    width: 300px;
+    height: 300px;
+  }
+</style>
+<style>
+  .main-logo {
+    width: 80px;
+    height: auto;
+  }
+  .icon-btn i {
+    font-size: 1.2rem;
+    vertical-align: middle;
+  }
+</style>
+<!-- Main content container, now position-relative -->
+  <div class="container position-relative pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+    
+    <!-- Logo inside the container, top-left -->
+    <img
+      src="Images/sm.jpeg"
+      alt="SonicMaster logo"
+      class="site-logo"
+    />
 
-      <main>
-        <section id="abstract">
-          <h2>Abstract</h2>
-          <p style="text-align: justify;">
-            Music recordings often suffer from audio quality issues such as excessive reverberation, distortion, clipping, tonal imbalances, and a narrowed stereo image, especially when created in non-professional settings without specialized equipment or expertise. These problems are typically corrected using separate specialized tools and manual adjustments. In this paper, we introduce SonicMaster, the first unified generative model for music restoration and mastering that addresses a broad spectrum of audio artifacts with text-based control. SonicMaster is conditioned on natural language instructions to apply targeted enhancements, or can operate in an automatic mode for general restoration. To train this model, we construct JamendoDegrad, a large dataset of paired degraded and high-quality tracks by simulating common degradation types with nineteen degradation functions belonging to five degradation groups: equalization, dynamics, reverb, amplitude, and stereo. Our approach leverages a flow-matching generative training paradigm to learn an audio transformation that maps degraded inputs to their cleaned, mastered versions guided by text prompts. Objective evaluations on multiple audio quality metrics demonstrate that SonicMaster significantly improves sound quality across all artifact categories. Furthermore, subjective listening tests confirm that listeners prefer SonicMaster’s enhanced outputs over both the original degraded audio and those produced by baseline methods, highlighting the effectiveness of our unified approach.
-          </p>
-        </section>
+    <div class="text-center">
+      <!-- TITLE ROW -->
+      <div class="row justify-content-center mb-3">
+        <div class="col-12">
+          <h1 class="mb-0">SonicMaster</h1>
+        </div>
+      </div>
 
-<section id="contribution" style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 2em;">
-  <h2>🔍 Key Contributions of <em>SonicMaster</em></h2>
+      <style>
+        .author-link {
+          color: #0d6efd;       /* Bootstrap primary blue */
+          font-size: 1.15rem;   /* slightly larger */
+          font-weight: 600;     /* semi-bold */
+          text-decoration: none;
+        }
+        .author-link:hover {
+          text-decoration: underline;
+        }
+      </style>
 
-  <ol>
-    <li>
-      <strong>Unified and Controllable Music Restoration Framework</strong><br>
-      <p>
-        <em>SonicMaster</em> is the first model to address multiple real-world music degradations—such as reverb, clipping,
-        spectral imbalance, and stereo artifacts—within a single generative framework. It supports both automatic and
-        instruction-based restoration through natural-language prompts.
+      <!-- Subtitle and authors -->
+      <h3 class="mt-3">Towards Controllable All-in-One Music Restoration and Mastering</h3>
+      <p class="fst-italic mb-0">
+        <a href="https://example.com/jan-profile" class="author-link">Jan Melechovsky*</a>,
+        <a href="https://example.com/ambuj-profile" class="author-link">Ambuj Mehrish</a>,
+        <a href="https://dorienherremans.com/" class="author-link">Dorien Herremans</a>
       </p>
-    </li>
-    <li>
-      <strong>Hybrid Flow Matching Architecture for High-Fidelity Output</strong><br>
-      <p>
-        By combining Multimodal Diffusion Transformers (MM-DiT) with standard DiT blocks in the latent domain,
-        <em>SonicMaster</em> achieves high-quality restoration while preserving musical fidelity and stereo realism across
-        diverse degradation types.
-      </p>
-    </li>
-  </ol>
+<p class="fst-italic mb-0" style="font-size: 1rem;">
+  The Audio, Music, and AI Lab at Singapore University of Technology and Design (SUTD)
+</p>
+      <style>
+        .btn-pill-custom {
+          background-color: #4d4c4a;
+          border: 1px solid #4d4c4a;
+          color: #FFFFFF;
+          font-weight: 700;
+        }
+        .btn-pill-custom i {
+          color: #333333;
+          margin-right: 0.4em;
+        }
+        .btn-pill-custom:hover {
+          background-color: #4d4c4a;
+          border-color: #4d4c4a;
+          color: #FFFFFF;
+          text-decoration: none;
+        }
+      </style>
 
-  <h3>🎼 Dataset Contribution</h3>
-  <p>
-    We introduce a large-scale synthetic and real-world degradation dataset paired with natural-language restoration
-    instructions. This benchmark enables training and evaluation of controllable music restoration models and supports
-    research in multi-task generative audio modeling.
-  </p>
+      <div class="d-flex justify-content-center gap-2 mt-3">
+        <a href="https://huggingface.co/datasets/amaai-lab/SonicMasterDataset" class="btn rounded-pill btn-pill-custom px-4">
+          <i class="bi bi-file-earmark-pdf-fill"></i>
+          Dataset
+        </a>
+        <a href="https://arxiv.org/pdf/2508.03448" class="btn rounded-pill btn-pill-custom px-4">
+          <i class="bi bi-file-earmark-arrow-up-fill"></i>
+          arXiv
+        </a>
+        <a href="https://huggingface.co/amaai-lab/SonicMaster" class="btn rounded-pill btn-pill-custom px-4">
+          <i class="bi bi-play-circle-fill"></i>
+          Demo
+        </a>
+        <a href="https://github.com/AMAAI-Lab/SonicMaster" class="btn rounded-pill btn-pill-custom px-4">
+          <i class="bi bi-github"></i>
+          Code
+        </a>
+      </div>
+
+      <style>
+        .abstract {
+          text-align: justify;
+          text-justify: inter-word;
+        }
+      </style>
+
+      <!-- Abstract -->
+      <p class="abstract">
+        <b>Abstract.</b>
+        Music recordings often suffer from audio quality issues such as excessive reverberation,
+        distortion, clipping, tonal imbalances, and a narrowed stereo image, especially when
+        created in non-professional settings without specialized equipment or expertise. These
+        problems are typically corrected using separate specialized tools and manual adjustments.
+        In this paper, we introduce SonicMaster, the first unified generative model for music
+        restoration and mastering that addresses a broad spectrum of audio artifacts with
+        text-based control. SonicMaster is conditioned on natural language instructions to apply
+        targeted enhancements, or can operate in an automatic mode for general restoration. To
+        train this model, we construct JamendoDegrad, a large dataset of paired degraded and
+        high-quality tracks by simulating common degradation types with nineteen degradation
+        functions belonging to five degradation groups: equalization, dynamics, reverb,
+        amplitude, and stereo. Our approach leverages a flow-matching generative training
+        paradigm to learn an audio transformation that maps degraded inputs to their cleaned,
+        mastered versions guided by text prompts. Objective evaluations on multiple audio
+        quality metrics demonstrate that SonicMaster significantly improves sound quality across
+        all artifact categories. Furthermore, subjective listening tests confirm that listeners
+        prefer SonicMaster’s enhanced outputs over both the original degraded audio and those
+        produced by baseline methods, highlighting the effectiveness of our unified approach.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <section id="key-contributions" class="container my-5">
+  <h2 class="mb-4">Key Contributions</h2>
+<div class="row g-4">
+  <!-- Contribution 1 -->
+  <div class="col-md-6 col-lg-3 d-flex">
+    <div class="p-4 rounded-3 text-white h-100"
+         style="background: linear-gradient(135deg, #4f93ce 0%, #357abd 100%);">
+      <h5 class="mb-3">🎵 Unified Restoration</h5>
+      <p> All-In-One model to simultaneously handle reverb, clipping, EQ, dynamics, and stereo imbalances.</p>
+    </div>
+  </div>
+
+  <!-- Contribution 2 -->
+  <div class="col-md-6 col-lg-3 d-flex">
+    <div class="p-4 rounded-3 text-white h-100"
+         style="background: linear-gradient(135deg, #9b5de5 0%, #7a3dbd 100%);">
+      <h5 class="mb-3">📝 Text-Based Control</h5>
+      <p>Use natural-language instructions (e.g. “reduce reverb”) for fine-grained audio enhancement.</p>
+    </div>
+  </div>
+
+  <!-- Contribution 3 -->
+  <div class="col-md-6 col-lg-3 d-flex">
+    <div class="p-4 rounded-3 text-white h-100"
+         style="background: linear-gradient(135deg, #32a852 0%, #268f42 100%);">
+      <h5 class="mb-3">🚀 High-Quality Output</h5>
+      <p>Objective metrics (FAD, SSIM, etc.) and listening tests show significant quality gains.</p>
+    </div>
+  </div>
+
+  <!-- Contribution 4 (Dataset) -->
+  <div class="col-md-6 col-lg-3 d-flex">
+    <div class="p-4 rounded-3 text-white h-100"
+         style="background: linear-gradient(135deg, #f4a261 0%, #e08d34 100%);">
+      <h5 class="mb-3">💾 SonicMaster Dataset</h5>
+      <p>We release a large-scale dataset of 25k (208 hrs) paired clean and degraded music segments with natural-language prompts for training and evaluation.</p>
+    </div>
+  </div>
+</div>
+
+
 </section>
 
+        <!-- ──────────────── 2. Dataset Overview ──────────────── -->
+<style>
+  .dataset-btn {
+    display: inline-block;
+    background-color: #4d4c4a;
+    color: #FFFFFF;
+    font-weight: 700;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+  }
+  .dataset-btn:hover {
+    background-color: #e67e00;
+    text-decoration: none;
+  }
+  .dataset-desc {
+    text-align: justify;
+    text-justify: inter-word;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+</style>
 
-        <section class="teaser my-4">
-          <!-- Replace with your teaser image -->
-          <figure>
-            <img src="./Images/teaser.png" alt="Teaser Image" />
-            <figcaption>SonicMaster pipeline: a flow-matching model trained on JamendoEnhance (19 simulated enhancements across EQ, dynamics, reverb, amplitude, stereo) takes an input music waveform and natural-language prompts (e.g., “Remove reverb,” “Boost bass”) to produce a high-fidelity enhanced output.</figcaption>
-          </figure>
-        </section>
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+  <h2 class="text-center">SonicMaster Dataset</h2>
+  <p class="dataset-desc">
+    Due to the absence of natural language instruction-prompted music restoration datasets, we have generated SonicMaster music restoration and mastering dataset with text prompts. We source 580k recordings from the Jamendo [1] under creative commons licence using the official Jamendo API. To ensure equal representation of genre, we defined 10 groups, where each group consists of multiple related genre tags, e.g., Hip-Hop genre group containing the following tags: "rap", "hiphop", "trap", "alternativehiphop", "gangstarap".
+  </p>
 
-        <section id="comparative-samples">
-          <h2>Comparative Samples</h2>
-          <table class="table table-responsive">
-            <thead>
-              <tr>
-                <th>Text Prompt</th>
-                <th>Original</th>
-                <th>Input</th>
-                <th>Inferred</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="font-size: 1rem;">Increase the clarity of this song by emphasizing treble frequencies.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1115233.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1115233_deg2.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1115233_deg2_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Can you make this sound louder, please?</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1495501.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1495501_deg2.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1495501_deg2_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Improve the balance in this song.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1536323.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1536323_deg2.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1536323_deg2_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Correct the unnatural frequency emphasis. Reduce the roominess or echo.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1615369.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1615369_deg3.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1615369_deg3_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Increase the clarity of this song by emphasizing treble frequencies.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1795816.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1795816_deg2.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1795816_deg2_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Clean this off any echoes!</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1829529.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1829529_deg2.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1829529_deg2_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Make the sound less squashed and more open.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/870503.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/870503_deg4.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/870503_deg4_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Make this song sound more boomy by amplifying the low end bass frequencies.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1464612.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1464612_deg1.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1464612_deg1_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Make the audio smoother and less distorted.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1505845.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1505845_deg2.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1505845_deg2_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Disentangle the left and right channels to give this song a stereo feeling.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1585651.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1585651_deg2.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1585651_deg2_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Raise the level of the vocals, please.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1745816.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1745816_deg1.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1745816_deg1_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Please, dereverb this audio.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/1807462.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/1807462_deg1.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/1807462_deg1_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-              <tr>
-                <td style="font-size: 1rem;">Disentangle the left and right channels to give this song a stereo feeling.</td>
-                <td><audio controls style="width: 150px;"><source src="./samples/origs/264050.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/inputs/264050_deg1.wav" type="audio/wav"/></audio></td>
-                <td><audio controls style="width: 150px;"><source src="./samples/infer/264050_deg1_infer.wav" type="audio/wav"/></audio></td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
+  <!-- Pipeline image -->
+  <div class="text-center mt-4">
+    <img src="Images/Dataset.png"
+         style="max-width: 80%; min-width: 280px;"
+         class="img-fluid"
+         alt="SonicMaster dataset creation pipeline">
+  </div>
+</div>
+<div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+  <h2 class="text-center">Music Enhancement Samples</h2>
+  <p class="text-center mb-4">
+    Example prompts with corresponding input to enhance, enhanced outputs from SonicMaster, and ground truth references.  
+    For optimal listening, please use headphones.
+  </p>
 
-        <section id="resources" class="my-5">
-          <h2>Resources</h2>
-          <p>1. Code repository: <a href="#">GitHub Link</a></p>
-          <p>2. Model checkpoints: <a href="#">Hugging Face Link</a></p>
-        </section>
-      </main>
-    </div>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th style="width: 35%;">Text Prompt</th>
+          <th>Music to Enhance</th>
+          <th>SonicMaster</th>
+          <th>Ground Truth</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Increase the clarity of this song by emphasizing treble frequencies.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1115233_deg2.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1115233_deg2_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1115233.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Can you make this sound louder, please?</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1495501_deg2.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1495501_deg2_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1495501.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Improve the balance in this song.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1536323_deg2.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1536323_deg2_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1536323.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Correct the unnatural frequency emphasis. Reduce the roominess or echo.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1615369_deg3.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1615369_deg3_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1615369.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Increase the clarity of this song by emphasizing treble frequencies.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1795816_deg2.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1795816_deg2_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1795816.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Clean this off any echoes!</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1829529_deg2.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1829529_deg2_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1829529.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Make the sound less squashed and more open.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/870503_deg4.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/870503_deg4_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/870503.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Make this song sound more boomy by amplifying the low end bass frequencies.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1464612_deg1.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1464612_deg1_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1464612.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Make the audio smoother and less distorted.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1505845_deg2.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1505845_deg2_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1505845.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Disentangle the left and right channels to give this song a stereo feeling.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1585651_deg2.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1585651_deg2_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1585651.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Raise the level of the vocals, please.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1745816_deg1.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1745816_deg1_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1745816.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Please, dereverb this audio.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/1807462_deg1.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/1807462_deg1_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/1807462.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+        <tr>
+          <td>Disentangle the left and right channels to give this song a stereo feeling.</td>
+          <td><audio controls style="width:150px;"><source src="./samples/inputs/264050_deg1.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/infer/264050_deg1_infer.mp3" type="audio/mpeg"/></audio></td>
+          <td><audio controls style="width:150px;"><source src="./samples/origs/264050.mp3" type="audio/mpeg"/></audio></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-    <!-- Analytics and scripts -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"
-    ></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    <!-- ──────────────── 2. Model Overview ────────────────
+    <div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+      <h2 class="text-center">SonicMaster Overview</h2>
+      <p class="text-center">
+        <img src="fig1.svg" height="200" width="800" class="img-fluid" alt="AudioPaLM diagram">
+      </p>
+      <p>
+        We expand the embedding matrix of a pretrained text-only model to handle audio tokens.
+        A mixed sequence of text and audio tokens is fed as input; the model decodes text or audio,
+        which latter AudioLM stages convert back to raw audio.
+      </p>
+      <div class="text-center">
+        <video style="max-width: 80%; min-width: 280px;" controls>
+          <source src="data/AudioPaLM_promo.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+      </div>
+    </div> -->
+
+ <!-- ──────────────── 3. Category-based Audio Demos ──────────────── -->
+<!-- <div class="container-xxl container-xxxl shadow p-5 mb-5 bg-white rounded">
+  <h3 id="s2s-section">Music Enhancement Examples</h3>
+  <p class="mb-0">
+    Click a category to preview audio demos. Columns: (1) Text Prompt, (2) Music to Enhance (input),
+    (3) SonicMaster, (4) Ground Truth. For optimal listening quality, please use headphones.
+  </p> -->
+
+  <!-- Category tabs -->
+  <!-- <ul id="cat-tabs" class="pagination justify-content-center pt-3 mb-3">
+    <li class="page-item active"><a class="page-link" href="#" data-cat="EQ">EQ</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-cat="Dynamics">Dynamics</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-cat="Reverb">Reverb</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-cat="Amplitude">Amplitude</a></li>
+    <li class="page-item"><a class="page-link" href="#" data-cat="Stereo">Stereo</a></li>
+  </ul> -->
+
+  <!-- <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr>
+          <th class="text-center" style="width:28%">Text Prompt</th>
+          <th class="text-center" style="width:24%">Music to Enhance</th>
+          <th class="text-center" style="width:24%">SonicMaster</th>
+          <th class="text-center" style="width:24%">Ground Truth</th>
+        </tr>
+      </thead>
+      <tbody id="cat-tbody"></tbody>
+    </table>
+  </div>
+</div> -->
+
+<!-- <script>
+  // === 1) Put your audio sample lists here ===
+  // Each item: { prompt, input, inferred, gt }
+  const DEMOS = {
+    EQ: [
+      {
+        prompt: "Reduce the muddiness and add clarity.",
+        input:   "audio/EQ/sample1_input.mp3",
+        inferred:"audio/EQ/sample1_inferred.mp3",
+        gt:      "audio/EQ/sample1_gt.mp3",
+      },
+      {
+        prompt: "Make the mix brighter and bring vocals forward.",
+        input:   "audio/EQ/sample2_input.mp3",
+        inferred:"audio/EQ/sample2_inferred.mp3",
+        gt:      "audio/EQ/sample2_gt.mp3",
+      }
+    ],
+    Dynamics: [
+      {
+        prompt: "Restore dynamics; reduce over-compression.",
+        input:   "audio/Dynamics/sample1_input.mp3",
+        inferred:"audio/Dynamics/sample1_inferred.mp3",
+        gt:      "audio/Dynamics/sample1_gt.mp3",
+      }
+    ],
+    Reverb: [
+      {
+        prompt: "Remove excess room reverb; make it drier.",
+        input:   "audio/Reverb/sample1_input.mp3",
+        inferred:"audio/Reverb/sample1_inferred.mp3",
+        gt:      "audio/Reverb/sample1_gt.mp3",
+      }
+    ],
+    Amplitude: [
+      {
+        prompt: "Increase loudness without distortion.",
+        input:   "audio/Amplitude/sample1_input.mp3",
+        inferred:"audio/Amplitude/sample1_inferred.mp3",
+        gt:      "audio/Amplitude/sample1_gt.mp3",
+      }
+    ],
+    Stereo: [
+      {
+        prompt: "Widen the stereo image for more space.",
+        input:   "audio/Stereo/sample1_input.mp3",
+        inferred:"audio/Stereo/sample1_inferred.mp3",
+        gt:      "audio/Stereo/sample1_gt.mp3",
+      }
+    ]
+  }; -->
+
+  <!-- // === 2) Render helper ===
+  function renderCategory(cat) {
+    const tbody = document.getElementById("cat-tbody");
+    const rows = (DEMOS[cat] || []).map(d => `
+      <tr>
+        <td><div class="small">${d.prompt}</div></td>
+        <td class="text-center">
+          <audio controls preload="none">
+            <source src="${d.input}" type="audio/mpeg">
+          </audio>
+        </td>
+        <td class="text-center">
+          <audio controls preload="none">
+            <source src="${d.inferred}" type="audio/mpeg">
+          </audio>
+        </td>
+        <td class="text-center">
+          <audio controls preload="none">
+            <source src="${d.gt}" type="audio/mpeg">
+          </audio>
+        </td>
+      </tr>
+    `).join("");
+    tbody.innerHTML = rows || `<tr><td colspan="4" class="text-center text-muted">No samples yet for ${cat}.</td></tr>`;
+  }
+
+  // === 3) Tabs wiring ===
+  document.getElementById("cat-tabs").addEventListener("click", (e) => {
+    const a = e.target.closest("a[data-cat]");
+    if (!a) return;
+    e.preventDefault();
+
+    // set active tab
+    [...document.querySelectorAll("#cat-tabs .page-item")].forEach(li => li.classList.remove("active"));
+    a.parentElement.classList.add("active");
+
+    // render
+    renderCategory(a.dataset.cat);
+  });
+
+  // Initial render
+  renderCategory("EQ");
+</script> -->
+
+
+    <!-- ──────────────── 4. Speech-to-Text Translation ──────────────── -->
+ <div class="container pt-5 mt-5 shadow p-5 mb-5 bg-white rounded">
+  <h3 class="text-center">References</h3>
+  <ul>
+    <li>
+      Melechovsky, J.; Mehrish, A.; Herremans, D. (2025).  
+      <em>SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering</em>.  
+      arXiv.
+    </li>
+    <li>
+      Jamendo API. <a href="https://developer.jamendo.com/v3.0/docs">Jamendo API Documentation</a>.
+    </li>
+  </ul>
+
+  <h3 class="text-center mt-4">Citation</h3>
+  <pre><code>@article{melechovsky2025sonicmaster,
+  title   = {SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering},
+  author  = {Melechovsky, Jan and Mehrish, Ambuj and Herremans, Dorien},
+  year    = {2025},
+  eprint  = {2508.03448},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.SD},
+  url     = {https://arxiv.org/abs/2508.03448}
+}</code></pre>
+</div>
+
+
+
   </body>
 </html>
