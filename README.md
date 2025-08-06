@@ -12,7 +12,7 @@
 [![Dataset](https://img.shields.io/badgeDataset-purple)](https://huggingface.co/datasets/amaai-lab/SonicMasterDataset)
 
 
-
+</div>
 <div align="center">
 <img src="https://ambujmehrish.github.io/SM-Orig/Images/sm.jpeg" alt="SonicMaster" width="400"/>
 </div>
