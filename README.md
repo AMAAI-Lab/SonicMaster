@@ -8,7 +8,7 @@
 [![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/amaai-lab/SonicMaster)
 [![Demo](https://img.shields.io/badge/🎵-Demo-green)](https://huggingface.co/amaai-lab/SonicMaster)
 [![Samples Page](https://img.shields.io/badge/Samples-Page-blue)](https://amaai-lab.github.io/SonicMaster/)
-[![Dataset](https://img.shields.io/badgeDataset-purple)](https://huggingface.co/datasets/amaai-lab/SonicMasterDataset)
+[![Dataset](https://img.shields.io/badge/Dataset-purple)](https://huggingface.co/datasets/amaai-lab/SonicMasterDataset)
 
 
 </div>
