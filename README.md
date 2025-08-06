@@ -46,11 +46,10 @@ Music recordings often suffer from audio quality issues such as excessive reverb
 
 ## Citation
 
-If you use SonicVerse in your work, please cite our paper:
 
-**SonicVerse: Multi-Task Learning for Music Feature-Informed Captioning**
-Anuradha Chopra, Abhinaba Roy, Dorien Herremans
-Accepted to AIMC 2025
+If you use SonicMaster in your work, please cite our paper:
+
+_Jan Melechovsky, Ambuj Mehrish, Dorien Herremans. 2025. SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering. ArXiv:2508.03448_
 
 ```bibtex
 @article{melechovsky2025sonicmaster,
