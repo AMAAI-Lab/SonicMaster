@@ -13,7 +13,7 @@
 
 </div>
 <div align="center">
-<img src="https://ambujmehrish.github.io/SM-Orig/Images/sm.jpeg" alt="SonicMaster" width="400"/>
+<img width="1161" height="341" src="https://ambujmehrish.github.io/SM-Orig/Images/sm.jpeg" alt="SonicMaster" width="400"/>
 </div>
 
 ## Overview
@@ -21,7 +21,12 @@
 Music recordings often suffer from audio quality issues such as excessive reverberation, distortion, clipping, tonal imbalances, and a narrowed stereo image, especially when created in non-professional settings without specialized equipment or expertise. These problems are typically corrected using separate specialized tools and manual adjustments. In this paper, we introduce SonicMaster, the first unified generative model for music restoration and mastering that addresses a broad spectrum of audio artifacts with text-based control. SonicMaster is conditioned on natural language instructions to apply targeted enhancements, or can operate in an automatic mode for general restoration.
 </div>
 
+<div align="center">
+<img src="https://github.com/user-attachments/assets/eb3b799b-04c9-4ff3-bc14-25ce9b74ca16" alt="SonicVerse Architecture" width="800"/>
+<p><em>Figure 1: SonicVerse architecture for music captioning with feature detection.</em></p>
+</div>
 
+<!--🔥 Live demo available on [Huggingface](https://huggingface.co/spaces/amaai-lab/SonicVerse)-->
 
 ## Key Features
 
@@ -29,7 +34,6 @@ Music recordings often suffer from audio quality issues such as excessive reverb
 - **📝 Text-Based Control**: Use natural-language instructions (e.g. “reduce reverb”) for fine-grained audio enhancement.
 - **🚀 High-Quality Output**: Objective metrics (FAD, SSIM, etc.) and listening tests show significant quality gains.
 - **💾 SonicMaster Dataset**: We release a large-scale dataset of 25k (208 hrs) paired clean and degraded music segments with natural-language prompts for training and evaluation.
-
 
 
 ## Installation
