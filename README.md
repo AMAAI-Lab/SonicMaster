@@ -13,7 +13,7 @@
 
 </div>
 <div align="center">
-<img width="1161" height="341" src="https://ambujmehrish.github.io/SM-Orig/Images/sm.jpeg" alt="SonicMaster" width="400"/>
+<img src="https://ambujmehrish.github.io/SM-Orig/Images/sm.jpeg" alt="SonicMaster" width="400"/>
 </div>
 
 ## Overview
