@@ -69,5 +69,5 @@ Read the paper here: [arXiv:2508.0338](http://arxiv.org/abs/2508.03448)
 
 
 <div align="center">
-Made with ❤️ by the AMAAI Lab | Singapore
+Made with 🎸 by the AMAAI Lab | Singapore
 </div>
