@@ -3,7 +3,6 @@
   # SonicMaster
 **SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering**
 
-[Demo] | [Model]() | [Website and Examples]() | [Paper] | [Dataset](https://huggingface.co/datasets/amaai-lab/SonicMasterDataset)
 
 [![arXiv](https://img.shields.io/badge/arXiv-2508.03448-b31b1b.svg)](http://arxiv.org/abs/2508.03448)
 [![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/amaai-lab/SonicMaster)
