@@ -5,10 +5,10 @@
 
 
 [![arXiv](https://img.shields.io/badge/arXiv-2508.03448-b31b1b.svg)](http://arxiv.org/abs/2508.03448)
-[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/amaai-lab/SonicMaster)
+[![Hugging Face](https://img.shields.io/badge/🤗%20Hugging%20Face-Model-yellow)](https://huggingface.co/amaai-lab/)
 [![Demo](https://img.shields.io/badge/🎵-Demo-green)](https://huggingface.co/amaai-lab/SonicMaster)
 [![Samples Page](https://img.shields.io/badge/Samples-Page-blue)](https://amaai-lab.github.io/SonicMaster/)
-[![Dataset](https://img.shields.io/badge/Dataset-purple)](https://huggingface.co/datasets/amaai-lab/SonicMasterDataset)
+[![Dataset](https://img.shields.io/badge/Dataset-download-purple)](https://huggingface.co/datasets/amaai-lab/SonicMasterDataset)
 
 
 </div>
