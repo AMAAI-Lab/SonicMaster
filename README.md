@@ -30,3 +30,42 @@ Music recordings often suffer from audio quality issues such as excessive reverb
 - **📝 Text-Based Control**: Use natural-language instructions (e.g. “reduce reverb”) for fine-grained audio enhancement.
 - **🚀 High-Quality Output**: Objective metrics (FAD, SSIM, etc.) and listening tests show significant quality gains.
 - **💾 SonicMaster Dataset**: We release a large-scale dataset of 25k (208 hrs) paired clean and degraded music segments with natural-language prompts for training and evaluation.
+
+
+
+## Installation
+
+```bash
+//TODO
+```
+
+
+
+## Citation
+
+If you use SonicVerse in your work, please cite our paper:
+
+**SonicVerse: Multi-Task Learning for Music Feature-Informed Captioning**
+Anuradha Chopra, Abhinaba Roy, Dorien Herremans
+Accepted to AIMC 2025
+
+```bibtex
+@article{melechovsky2025sonicmaster,
+      title={SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering}, 
+      author={Jan Melechovsky and Ambuj Mehrish and Dorien Herremans},
+      year={2025},
+      eprint={2508.03448},
+      archivePrefix={arXiv},
+      url={https://arxiv.org/abs/2508.03448}, 
+}
+```
+
+Read the paper here: [arXiv:2508.0338](http://arxiv.org/abs/2508.03448)
+
+---
+
+
+
+<div align="center">
+Made with ❤️ by the AMAAI Lab | Singapore
+</div>
