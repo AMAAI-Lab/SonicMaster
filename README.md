@@ -37,12 +37,20 @@ Music recordings often suffer from audio quality issues such as excessive reverb
 
 
 ## Installation
-
+To run SonicMaster, you should use python==3.13. Then, install the requirements and clone the repo.
 ```bash
-//TODO
+pip install -r requirements_sonic.txt
 ```
 
-
+## Training
+We trained SonicMaster with pytorch tensor files of our SonicMaster dataset -- for speed. For that, you would first want to pre-encode your audio:
+```bash
+accelerate launch preencode_latents_acce2.py
+```
+Then you can start training with the training script that loads pt files from a jsonl metadata file. The script also allows to turn on inference during training (after a certain number of epochs) to monitor your progress.
+```bash
+accelerate launch train_ptload_inference.py
+```
 
 ## Citation
 
