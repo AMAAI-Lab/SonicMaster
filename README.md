@@ -15,6 +15,8 @@
 <div align="center">
 <img src="https://ambujmehrish.github.io/SM-Orig/Images/sm.jpeg" alt="SonicMaster" width="400"/>
 </div>
+### 🚀 News
+- **[May 2026]** 🎉 **SonicMaster** has been accepted as a regular paper at **ICML 2026**!
 
 ## Overview
 
