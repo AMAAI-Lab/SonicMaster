@@ -66,13 +66,15 @@ _Jan Melechovsky, Ambuj Mehrish, Dorien Herremans. 2025. SonicMaster: Towards Co
 ```bibtex
 @article{melechovsky2025sonicmaster,
       title={SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering}, 
-      author={Jan Melechovsky and Ambuj Mehrish and Dorien Herremans},
+      author={Jan Melechovsky and Ambuj Mehrish and Abhinaba Roy and Dorien Herremans},
       year={2025},
       eprint={2508.03448},
       archivePrefix={arXiv},
+      primaryClass  = {cs.SD},
       url={https://arxiv.org/abs/2508.03448}, 
 }
 ```
+
 
 Read the paper here: [arXiv:2508.0338](http://arxiv.org/abs/2508.03448)
 
