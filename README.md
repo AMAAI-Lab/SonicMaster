@@ -61,7 +61,7 @@ accelerate launch train_ptload_inference.py
 
 If you use SonicMaster in your work, please cite our paper:
 
-_Jan Melechovsky, Ambuj Mehrish, Dorien Herremans. 2025. SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering. ArXiv:2508.03448_
+_Jan Melechovsky, Ambuj Mehrish, Abhinaba Roy, Dorien Herremans. 2025. SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering. ArXiv:2508.03448_
 
 ```bibtex
 @article{melechovsky2025sonicmaster,
