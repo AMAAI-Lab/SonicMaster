@@ -18,6 +18,15 @@ from accelerate.utils import set_seed
 from datasets import load_dataset
 from torch.utils.data import Dataset, DataLoader
 from tqdm.auto import tqdm
+from fullsong_chunking import (
+    CARRY_LATENT_FRAMES,
+    MAIN_LATENT_FRAMES,
+    SONICMASTER_SAMPLE_RATE,
+    TRAINED_DURATION_SECONDS,
+    crossfade_and_trim,
+    make_overlapping_chunks,
+    make_vae_native_geometry,
+)
 from model import TangoFlux
 from datasets import load_dataset, Audio
 from utils import Text2AudioDataset, read_wav_file, pad_wav
@@ -149,6 +158,12 @@ def main():
     vae.to(device)
     vae.eval()
 
+    geometry = make_vae_native_geometry(
+        vae_hop_length=getattr(vae, "hop_length", 0),
+        model_audio_seq_len=model.audio_seq_len,
+        vae_sample_rate=getattr(vae, "sampling_rate", 0),
+    )
+
 
     ## Freeze text encoder param
     for param in model.text_encoder.parameters():
@@ -167,13 +182,7 @@ def main():
     output_dir = "/outputs/fullsongs/full10sec40g1"
     os.makedirs(output_dir, exist_ok=True)
 
-    # Parameters
-    fs = 44100
-    chunk_duration = 30
-    overlap_duration = 10
-    chunk_size = chunk_duration * fs
-    overlap_size = overlap_duration * fs
-    stride_size = chunk_size - overlap_size
+    fs = SONICMASTER_SAMPLE_RATE
 
     # Load JSONL
     with open(jsonl_path, "r") as f:
@@ -196,17 +205,10 @@ def main():
         audio = audio.to(device)  # [2, T]
 
         # Chunking degraded audio
-        chunks = []
-        start = 0
-        while start < audio.shape[1]:
-            end = min(start + chunk_size, audio.shape[1])
-            chunk = audio[:, start:end]
-
-            # Pad last chunk
-            if chunk.shape[1] < chunk_size:
-                chunk = torch.nn.functional.pad(chunk, (0, chunk_size - chunk.shape[1]))
-            chunks.append(chunk)
-            start += stride_size
+        target_length = audio.shape[1]
+        chunks = make_overlapping_chunks(audio, geometry)
+        if not chunks:
+            raise RuntimeError(f"No audio content to process: {input_path}")
 
         # Pre-encode degraded chunks
         # with torch.no_grad():
@@ -221,7 +223,18 @@ def main():
 
             for b in range(0, num_chunks, batch_size):
                 batch = chunk_tensor[b:b+batch_size]  # [B, 2, T]
+                if batch.shape[-1] != geometry.chunk_size:
+                    raise RuntimeError(
+                        "Chunk batch has "
+                        f"{batch.shape[-1]} samples; expected {geometry.chunk_size}."
+                    )
                 latent = vae.encode(batch).latent_dist.mode()  # [B, C, T']
+                if latent.shape[-1] != MAIN_LATENT_FRAMES:
+                    raise RuntimeError(
+                        "VAE main encode length mismatch: "
+                        f"{batch.shape[-1]} samples produced {latent.shape[-1]} "
+                        f"frames; expected {MAIN_LATENT_FRAMES}."
+                    )
                 degraded_latents_list.append(latent)
 
             degraded_latents = torch.cat(degraded_latents_list, dim=0)  # [N, C, T']
@@ -243,7 +256,7 @@ def main():
                     num_inference_steps=10,
                     timesteps=None,
                     guidance_scale=1,
-                    duration=chunk_duration,
+                    duration=TRAINED_DURATION_SECONDS,
                     seed=0,
                     disable_progress=False,
                     num_samples_per_prompt=1,
@@ -253,27 +266,35 @@ def main():
 
                 # Decode latent to waveform
                 decoded_wave = vae.decode(result_latent.transpose(2, 1)).sample.cpu()  # [1, 2, T]
+                if decoded_wave.shape[-1] != geometry.chunk_size:
+                    raise RuntimeError(
+                        "VAE decoded chunk length mismatch; refusing to stitch: "
+                        f"chunk {i} produced {decoded_wave.shape[-1]} samples, "
+                        f"expected {geometry.chunk_size}."
+                    )
                 decoded_chunks.append(decoded_wave)
 
-                # Get last 10 seconds of waveform → re-encode as latent
-                last_10_sec = decoded_wave[:, :, -overlap_size:].to(device)
-                prev_cond_latent = vae.encode(last_10_sec).latent_dist.mode().transpose(1,2)  # [1, C, T'] ->[1, T', C] 
+                # Re-encode the VAE-native carry as conditioning for the next chunk.
+                carry = decoded_wave[:, :, -geometry.overlap:].to(device)
+                if carry.shape[-1] != geometry.overlap:
+                    raise RuntimeError(
+                        "Conditioning carry has "
+                        f"{carry.shape[-1]} samples; expected {geometry.overlap}."
+                    )
+                carry_latent = vae.encode(carry).latent_dist.mode()
+                if carry_latent.shape[-1] != CARRY_LATENT_FRAMES:
+                    raise RuntimeError(
+                        "VAE carry encode length mismatch: "
+                        f"{carry.shape[-1]} samples produced "
+                        f"{carry_latent.shape[-1]} frames; "
+                        f"expected {CARRY_LATENT_FRAMES}."
+                    )
+                prev_cond_latent = carry_latent.transpose(1,2)  # [1, C, T'] ->[1, T', C]
 
-        # Stitch decoded chunks with crossfade
-        final_output = decoded_chunks[0]  # [1, 2, T]
-        for i in range(1, len(decoded_chunks)):
-            prev = final_output[:, :, -overlap_size:]
-            curr = decoded_chunks[i][:, :, :overlap_size]
-
-            alpha = torch.linspace(1, 0, steps=overlap_size).view(1, 1, -1)
-            beta = 1 - alpha
-            blended = prev * alpha + curr * beta
-
-            final_output = torch.cat([
-                final_output[:, :, :-overlap_size],
-                blended,
-                decoded_chunks[i][:, :, overlap_size:]
-            ], dim=2)
+        # Remove only the padded stitched tail; underflow is an explicit error.
+        final_output = crossfade_and_trim(
+            decoded_chunks, geometry, target_length
+        )
 
         # Save to file
         output_path = os.path.join(output_dir, f"{song_id}_reconstructed.flac")
