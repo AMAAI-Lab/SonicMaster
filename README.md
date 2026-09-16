@@ -64,14 +64,12 @@ If you use SonicMaster in your work, please cite our paper:
 _Jan Melechovsky, Ambuj Mehrish, Abhinaba Roy, Dorien Herremans. 2025. SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering. ArXiv:2508.03448_
 
 ```bibtex
-@article{melechovsky2025sonicmaster,
-      title={SonicMaster: Towards Controllable All-in-One Music Restoration and Mastering}, 
-      author={Jan Melechovsky and Ambuj Mehrish and Abhinaba Roy and Dorien Herremans},
-      year={2025},
-      eprint={2508.03448},
-      archivePrefix={arXiv},
-      primaryClass  = {cs.SD},
-      url={https://arxiv.org/abs/2508.03448}, 
+@inproceedings{melechovsky2026sonicmaster,
+  title     = {{SonicMaster}: Towards Controllable All-in-One Music Restoration and Mastering},
+  author    = {Melechovsky, Jan and Mehrish, Ambuj and Herremans, Dorien},
+  booktitle = {Proceedings of the 43rd International Conference on Machine Learning},
+  year      = {2026},
+  address   = {Seoul, South Korea}
 }
 ```
 
